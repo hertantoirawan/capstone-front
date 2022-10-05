@@ -4,7 +4,7 @@ import { DataTable } from "react-native-paper";
 import { Text, View } from "../components/Themed";
 import moment from "moment";
 
-const numberOfItemsPerPageList = [2, 3, 4];
+const ITEMS_PER_PAGE = 10;
 
 const applications = [
   { id: 1, role: "Software Engineer", company: "Google", date: "10/1/2022" },
@@ -19,17 +19,22 @@ const applications = [
   { id: 10, role: "Software Engineer", company: "Apple", date: "10/3/2022" },
 ];
 
-export default function ApplicationsScreen() {
+export default function ApplicationsScreen({ navigation }) {
   const [page, setPage] = useState<number>(0);
-  const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useState(
-    numberOfItemsPerPageList[0]
-  );
+  const [numberOfItemsPerPage, setNumberOfItemsPerPage] =
+    useState(ITEMS_PER_PAGE);
   const from = page * numberOfItemsPerPage;
   const to = Math.min((page + 1) * numberOfItemsPerPage, applications.length);
 
   useEffect(() => {
     setPage(0);
   }, [numberOfItemsPerPage]);
+
+  const handleRowClick = (application) => {
+    // open application details
+    console.log("open application detail");
+    navigation.navigate("ApplicationModal", { application });
+  };
 
   return (
     <View style={styles.container}>
@@ -41,30 +46,34 @@ export default function ApplicationsScreen() {
       />
       <DataTable>
         <DataTable.Header>
-          <DataTable.Title>Role</DataTable.Title>
+          <DataTable.Title style={{ flex: 2 }}>Role</DataTable.Title>
           <DataTable.Title>Company</DataTable.Title>
-          <DataTable.Title sortDirection="descending">Date</DataTable.Title>
+          <DataTable.Title>Date</DataTable.Title>
         </DataTable.Header>
 
-        {applications.map((application) => (
-          <DataTable.Row>
-            <DataTable.Cell>{application.role}</DataTable.Cell>
-            <DataTable.Cell>{application.company}</DataTable.Cell>
-            <DataTable.Cell>
-              {moment(application.date, "MM/DD/YYYY").fromNow()}
-            </DataTable.Cell>
-          </DataTable.Row>
-        ))}
+        {applications
+          .slice(
+            page * numberOfItemsPerPage,
+            page * numberOfItemsPerPage + numberOfItemsPerPage
+          )
+          .map((application) => (
+            <DataTable.Row onPress={() => handleRowClick(application)}>
+              <DataTable.Cell style={{ flex: 2 }}>
+                {application.role}
+              </DataTable.Cell>
+              <DataTable.Cell>{application.company}</DataTable.Cell>
+              <DataTable.Cell>
+                {moment(application.date, "MM/DD/YYYY").fromNow()}
+              </DataTable.Cell>
+            </DataTable.Row>
+          ))}
 
         <DataTable.Pagination
           page={page}
           numberOfPages={Math.ceil(applications.length / numberOfItemsPerPage)}
           onPageChange={(page) => setPage(page)}
           label={`${from + 1}-${to} of ${applications.length}`}
-          numberOfItemsPerPageList={numberOfItemsPerPageList}
           numberOfItemsPerPage={numberOfItemsPerPage}
-          showFastPaginationControls
-          selectPageDropdownLabel={"Rows per page"}
         />
       </DataTable>
     </View>

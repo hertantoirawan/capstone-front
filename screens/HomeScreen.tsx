@@ -1,7 +1,8 @@
-import { StyleSheet, FlatList, Image } from "react-native";
-import { Text, Card, Divider, Chip } from "react-native-paper";
-import { View } from "../components/Themed";
+import { StyleSheet, FlatList, Platform } from "react-native";
+import { Card, Divider, Chip, FAB } from "react-native-paper";
+import { View, Text } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
+import React from "react";
 
 const resumes = [
   {
@@ -24,7 +25,11 @@ const resumes = [
   },
 ];
 
-export default function HomeScreen({ navigation }: RootTabScreenProps<"Home">) {
+const handleAddNewResume = () => {
+  console.log("Adding new resume...");
+};
+
+export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Home</Text>
@@ -43,6 +48,7 @@ export default function HomeScreen({ navigation }: RootTabScreenProps<"Home">) {
           </Card>
         )}
       />
+      <FAB icon="plus" style={styles.fab} onPress={handleAddNewResume} />
     </View>
   );
 }
@@ -61,5 +67,11 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     flexDirection: "row",
+  },
+  fab: {
+    position: "absolute",
+    margin: 16,
+    right: 0,
+    bottom: 0,
   },
 });

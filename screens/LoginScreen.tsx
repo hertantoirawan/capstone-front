@@ -1,6 +1,6 @@
-import { View } from "../components/Themed";
+import { View, Text } from "../components/Themed";
 
-import { Text, Button } from "react-native-paper";
+import { Button } from "react-native-paper";
 // import { useAuth } from "../hooks/useAuth.js";
 import { StyleSheet } from "react-native";
 
