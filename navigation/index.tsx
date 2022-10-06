@@ -24,6 +24,8 @@ import LoginScreen from "../screens/LoginScreen";
 import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 
+import ResumeScreen from "../screens/ResumeScreen";
+
 import {
   RootStackParamList,
   RootTabParamList,
@@ -66,6 +68,7 @@ function RootNavigator() {
         component={BottomTabNavigator}
         options={{ headerShown: false }}
       />
+      <Stack.Screen name="Resume" component={ResumeScreen} />
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}

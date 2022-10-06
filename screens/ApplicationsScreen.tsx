@@ -38,12 +38,6 @@ export default function ApplicationsScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Applications</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
       <DataTable>
         <DataTable.Header>
           <DataTable.Title style={{ flex: 2 }}>Role</DataTable.Title>

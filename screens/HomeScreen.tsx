@@ -1,8 +1,9 @@
 import { StyleSheet, FlatList, Platform } from "react-native";
-import { Card, Divider, Chip, FAB } from "react-native-paper";
+import { Card, Divider, Chip, FAB, Button } from "react-native-paper";
 import { View, Text } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 import React from "react";
+import CardActions from "react-native-paper/lib/typescript/components/Card/CardActions";
 
 const resumes = [
   {
@@ -13,8 +14,8 @@ const resumes = [
   },
   {
     id: 2,
-    name: "Technical",
-    description: "Technical resume",
+    name: "Software Engineer",
+    description: "Software Engineer resume",
     tags: ["engineer", "Google", "senior"],
   },
   {
@@ -29,18 +30,20 @@ const handleAddNewResume = () => {
   console.log("Adding new resume...");
 };
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Home</Text>
-      <Divider />
       <FlatList
         data={resumes}
         renderItem={({ item }) => (
-          <Card>
+          <Card
+            style={styles.card}
+            mode="outlined"
+            onPress={() => navigation.navigate("Resume", { resume: item })}
+          >
             <Card.Cover source={{ uri: "https://picsum.photos/500" }} />
             <Card.Title title={item.name} subtitle={item.description} />
-            <Card.Content style={styles.card}>
+            <Card.Content style={styles.tags}>
               {item.tags.map((tag) => (
                 <Chip style={{ marginRight: 8 }}>{tag}</Chip>
               ))}
@@ -65,6 +68,9 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   card: {
+    marginBottom: 10,
+  },
+  tags: {
     flex: 1,
     flexDirection: "row",
   },
