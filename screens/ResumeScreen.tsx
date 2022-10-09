@@ -271,7 +271,7 @@ export default function Resume({ route, navigation }) {
       <div class="mainDetails">
         <div id="name">
           <h1>${user.name}</h1>
-          <h2>Software Engineer</h2>
+          <h2>${resume.name}</h2>
         </div>
 
         <div id="contactDetails">
@@ -425,7 +425,9 @@ export default function Resume({ route, navigation }) {
       <Text>{resume.description}</Text>
       <View style={styles.tags}>
         {resume.tags.map((tag: string[]) => (
-          <Chip style={{ marginRight: 8 }}>{tag}</Chip>
+          <Chip key={`${resume.id}-${tag}`} style={{ marginRight: 8 }}>
+            {tag}
+          </Chip>
         ))}
       </View>
       <View style={styles.links}>

@@ -51,7 +51,10 @@ export default function ApplicationsScreen({ navigation }) {
             page * numberOfItemsPerPage + numberOfItemsPerPage
           )
           .map((application) => (
-            <DataTable.Row onPress={() => handleRowClick(application)}>
+            <DataTable.Row
+              key={application.id}
+              onPress={() => handleRowClick(application)}
+            >
               <DataTable.Cell style={{ flex: 2 }}>
                 {application.role}
               </DataTable.Cell>

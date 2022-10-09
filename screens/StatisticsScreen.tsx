@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, ScrollView } from "react-native";
 
 import { Text, View } from "../components/Themed";
 import { BarChart, ContributionGraph } from "react-native-chart-kit";
@@ -41,78 +41,77 @@ const handleToolTip: any = {};
 export default function StatisticsScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Statistics</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <View>
-        <BarChart
-          data={data}
-          width={Dimensions.get("window").width}
-          height={220}
-          yAxisLabel="$"
-          chartConfig={chartConfig}
-          verticalLabelRotation={30}
-        />
-      </View>
-      <View>
-        <BarChart
-          data={{
-            labels: ["Januari", "Februari", "Maret", "April", "Mei", "Juni"],
-            datasets: [
-              {
-                data: [
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                ],
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+      >
+        <View>
+          <BarChart
+            data={data}
+            width={Dimensions.get("window").width}
+            height={220}
+            yAxisLabel="$"
+            chartConfig={chartConfig}
+            verticalLabelRotation={30}
+          />
+        </View>
+        <View>
+          <BarChart
+            data={{
+              labels: ["Januari", "Februari", "Maret", "April", "Mei", "Juni"],
+              datasets: [
+                {
+                  data: [
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                  ],
+                },
+              ],
+            }}
+            width={Dimensions.get("window").width - 50} // from react-native
+            height={220}
+            chartConfig={{
+              backgroundColor: "white",
+              backgroundGradientFrom: "white",
+              backgroundGradientTo: "white",
+              color: (opacity = 1) => `black`,
+              labelColor: (opacity = 1) => `black`,
+              barPercentage: 1,
+              style: {
+                borderRadius: 16,
               },
-            ],
-          }}
-          width={Dimensions.get("window").width - 50} // from react-native
-          height={220}
-          chartConfig={{
-            backgroundColor: "yellow",
-            backgroundGradientFrom: "yellow",
-            backgroundGradientTo: "yellow",
-            color: (opacity = 1) => `black`,
-            labelColor: (opacity = 1) => `black`,
-            barPercentage: 1,
-            style: {
+            }}
+            style={{
+              marginVertical: 8,
               borderRadius: 16,
-            },
-          }}
-          style={{
-            marginVertical: 8,
-            borderRadius: 16,
-          }}
-        />
-      </View>
-      <View>
-        <ContributionGraph
-          values={contributions}
-          endDate={new Date("2019-04-01")}
-          numDays={105}
-          width={Dimensions.get("window").width - 16}
-          height={220}
-          chartConfig={{
-            backgroundColor: "#1cc910",
-            backgroundGradientFrom: "#eff3ff",
-            backgroundGradientTo: "#efefef",
-            decimalPlaces: 2,
-            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-            style: {
-              borderRadius: 16,
-            },
-          }}
-          tooltipDataAttrs={(value) => handleToolTip}
-        />
-      </View>
+            }}
+          />
+        </View>
+        <View>
+          <ContributionGraph
+            values={contributions}
+            endDate={new Date("2019-04-01")}
+            numDays={105}
+            width={Dimensions.get("window").width - 16}
+            height={220}
+            chartConfig={{
+              backgroundColor: "#1cc910",
+              backgroundGradientFrom: "#eff3ff",
+              backgroundGradientTo: "#efefef",
+              decimalPlaces: 2,
+              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              style: {
+                borderRadius: 16,
+              },
+            }}
+            tooltipDataAttrs={(value) => handleToolTip}
+          />
+        </View>
+      </ScrollView>
     </View>
   );
 }
