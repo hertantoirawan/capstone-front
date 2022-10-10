@@ -49,7 +49,10 @@ export default function HomeScreen({ navigation }) {
             mode="outlined"
             onPress={() => navigation.navigate("Resume", { resume: item })}
           >
-            <Card.Cover source={{ uri: "https://picsum.photos/500" }} />
+            <Card.Cover
+              style={styles.cover}
+              source={require("../assets/images/resume-template.png")}
+            />
             <Card.Title title={item.name} subtitle={item.description} />
             <Card.Content style={styles.tags}>
               {item.tags.map((tag) => (
@@ -60,7 +63,6 @@ export default function HomeScreen({ navigation }) {
             </Card.Content>
           </Card>
         )}
-        showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       />
       <FAB icon="plus" style={styles.fab} onPress={handleAddNewResume} />
@@ -81,6 +83,9 @@ const styles = StyleSheet.create({
   },
   card: {
     marginBottom: 10,
+  },
+  cover: {
+    height: 150,
   },
   tags: {
     flex: 1,

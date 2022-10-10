@@ -41,10 +41,7 @@ const handleToolTip: any = {};
 export default function StatisticsScreen() {
   return (
     <View style={styles.container}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-      >
+      <ScrollView showsHorizontalScrollIndicator={false}>
         <View>
           <BarChart
             data={data}

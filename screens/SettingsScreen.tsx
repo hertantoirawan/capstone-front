@@ -1,19 +1,23 @@
-import { StyleSheet } from "react-native";
-
+import { StyleSheet, Platform } from "react-native";
+import { useState, useCallback } from "react";
+import { Button } from "react-native-paper";
 import { Text, View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function SettingsScreen({
   navigation,
 }: RootTabScreenProps<"Settings">) {
+  const [date, setDate] = useState(new Date());
+
+  const setNewDate = (event, selectedDate) => {
+    setDate(selectedDate);
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Settings</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
+      <Text>selected: {date.toLocaleDateString()}</Text>
+      <DateTimePicker value={date} onChange={setNewDate} />
     </View>
   );
 }
@@ -21,7 +25,6 @@ export default function SettingsScreen({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
   },
   title: {

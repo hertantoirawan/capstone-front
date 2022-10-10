@@ -9,12 +9,12 @@ const ITEMS_PER_PAGE = 10;
 const applications = [
   { id: 1, role: "Software Engineer", company: "Google", date: "10/1/2022" },
   { id: 2, role: "Project Manager", company: "Stripe", date: "10/1/2022" },
-  { id: 3, role: "Software Engineer", company: "Grab", date: "10/1/2022" },
+  { id: 3, role: "Frontend Engineer", company: "Grab", date: "10/1/2022" },
   { id: 4, role: "Software Engineer", company: "ZenDesk", date: "10/1/2022" },
-  { id: 5, role: "Software Engineer", company: "Binance", date: "10/2/2022" },
+  { id: 5, role: "Backend Engineer", company: "Binance", date: "10/2/2022" },
   { id: 6, role: "Software Engineer", company: "Coinbase", date: "10/2/2022" },
-  { id: 7, role: "Software Engineer", company: "Gojek", date: "10/2/2022" },
-  { id: 8, role: "Software Engineer", company: "Traveloka", date: "10/3/2022" },
+  { id: 7, role: "Frontend Engineer", company: "Gojek", date: "10/2/2022" },
+  { id: 8, role: "Backend Engineer", company: "Traveloka", date: "10/3/2022" },
   { id: 9, role: "Software Engineer", company: "Facebook", date: "10/3/2022" },
   { id: 10, role: "Software Engineer", company: "Apple", date: "10/3/2022" },
 ];
@@ -32,7 +32,6 @@ export default function ApplicationsScreen({ navigation }) {
 
   const handleRowClick = (application) => {
     // open application details
-    console.log("open application detail");
     navigation.navigate("ApplicationModal", { application });
   };
 

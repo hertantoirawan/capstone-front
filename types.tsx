@@ -21,6 +21,7 @@ export type RootStackParamList = {
   Resume: undefined;
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   ApplicationModal: undefined;
+  ApplyModal: undefined;
   NotFound: undefined;
 };
 

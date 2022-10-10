@@ -4,15 +4,12 @@ import { useEffect, useState } from "react";
 import { Button, Chip } from "react-native-paper";
 import { StyleSheet, Image, Platform } from "react-native";
 import * as Print from "expo-print";
-import { shareAsync } from "expo-sharing";
 import { WebView } from "react-native-webview";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import Navigation from "../navigation";
 
 export default function Resume({ route, navigation }) {
   const resume = route.params.resume;
   const [resumeImage, setResumeImage] = useState("");
-  const [selectedPrinter, setSelectedPrinter] = useState();
 
   const user = {
     name: "Hertanto Irawan",
@@ -396,27 +393,8 @@ export default function Resume({ route, navigation }) {
     displayResume();
   }, []);
 
-  const print = async () => {
-    // On iOS/android prints the given html. On web prints the HTML from the current page.
-    await Print.printAsync({
-      html,
-      printerUrl: selectedPrinter?.url, // iOS only
-    });
-  };
-
-  const printToFile = async () => {
-    // On iOS/android prints the given html. On web prints the HTML from the current page.
-    await shareAsync(resumeImage, { UTI: ".pdf", mimeType: "application/pdf" });
-  };
-
-  // const selectPrinter = async () => {
-  //   const printer = await Print.selectPrinterAsync(); // iOS only
-  //   setSelectedPrinter(printer);
-  // };
-
-  const edit = () => {
-    console.log("edit resume");
-    // navigation.navigate('Edit');
+  const handleApply = () => {
+    navigation.navigate("ApplyModal", { html, resume: resumeImage });
   };
 
   return (
@@ -430,27 +408,15 @@ export default function Resume({ route, navigation }) {
           </Chip>
         ))}
       </View>
-      <View style={styles.links}>
-        <Ionicons name="share" size={24} color="black" onPress={printToFile} />
-        <Ionicons name="print" size={24} color="black" onPress={print} />
-        <MaterialIcons name="edit" size={24} color="black" onPress={edit} />
-      </View>
-      {/* {Platform.OS === "ios" && (
-        <>
-          <View style={styles.spacer} />
-          <Button onPress={selectPrinter}>Select Printer</Button>
-          <View style={styles.spacer} />
-          {selectedPrinter ? (
-            <Text
-              style={styles.printer}
-            >{`Selected printer: ${selectedPrinter.name}`}</Text>
-          ) : undefined}
-        </>
-      )} */}
       <View style={styles.resume}>
         {resumeImage && (
           <WebView originWhitelist={["*"]} source={{ uri: resumeImage }} />
         )}
+      </View>
+      <View style={styles.links}>
+        <Button style={styles.button} mode="contained" onPress={handleApply}>
+          Apply
+        </Button>
       </View>
     </View>
   );
@@ -477,9 +443,14 @@ const styles = StyleSheet.create({
   },
   links: {
     flexDirection: "row",
+    marginTop: 20,
+    padding: 10,
   },
   resume: {
     width: 400,
     height: 500,
+  },
+  button: {
+    flex: 1,
   },
 });

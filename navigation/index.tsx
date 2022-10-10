@@ -16,15 +16,16 @@ import { ColorSchemeName, Pressable } from "react-native";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
-import ApplicationModalScreen from "../screens/ApplicationModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import ApplicationsScreen from "../screens/ApplicationsScreen";
 import StatisticsScreen from "../screens/StatisticsScreen";
 import LoginScreen from "../screens/LoginScreen";
 import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from "../screens/SettingsScreen";
-
 import ResumeScreen from "../screens/ResumeScreen";
+
+import ApplicationModalScreen from "../screens/ApplicationModalScreen";
+import ApplyModalScreen from "../screens/ApplyModalScreen";
 
 import {
   RootStackParamList,
@@ -78,6 +79,12 @@ function RootNavigator() {
         <Stack.Screen
           name="ApplicationModal"
           component={ApplicationModalScreen}
+          options={{ title: "Application" }}
+        />
+        <Stack.Screen
+          name="ApplyModal"
+          component={ApplyModalScreen}
+          options={{ title: "Apply" }}
         />
       </Stack.Group>
     </Stack.Navigator>
