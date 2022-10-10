@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Platform, StyleSheet, Pressable } from "react-native";
-import { TextInput, Button } from "react-native-paper";
+import { TextInput, Button, Snackbar } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 import { shareAsync } from "expo-sharing";
 import * as Print from "expo-print";
@@ -33,6 +33,7 @@ export default function ApplyModalScreen({ route }) {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [isSnackbarVisible, setSnackbarVisibility] = useState(false);
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -45,6 +46,13 @@ export default function ApplyModalScreen({ route }) {
   const handleConfirm = (newDate) => {
     setDate(newDate);
     hideDatePicker();
+  };
+
+  const onDismissSnackBar = () => setSnackbarVisibility(false);
+
+  const saveApplication = () => {
+    console.log("save application");
+    setSnackbarVisibility(true);
   };
 
   return (
@@ -84,7 +92,7 @@ export default function ApplyModalScreen({ route }) {
           date={date}
         />
 
-        <Button style={styles.input} mode="contained">
+        <Button style={styles.input} mode="contained" onPress={saveApplication}>
           Save
         </Button>
       </View>
@@ -107,6 +115,16 @@ export default function ApplyModalScreen({ route }) {
           Print
         </Button>
       </View>
+
+      <Snackbar
+        visible={isSnackbarVisible}
+        onDismiss={onDismissSnackBar}
+        action={{
+          label: "Dismiss",
+        }}
+      >
+        Application has been saved.
+      </Snackbar>
 
       {/* Use a light status bar on iOS to account for the black space above the modal */}
       <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
