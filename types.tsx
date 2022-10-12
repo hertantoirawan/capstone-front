@@ -22,6 +22,7 @@ export type RootStackParamList = {
   Projects: undefined;
   ProjectDetails: undefined;
   Education: undefined;
+  SettingsModal: undefined;
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   ApplicationModal: undefined;
   ApplyModal: undefined;
@@ -35,7 +36,7 @@ export type RootTabParamList = {
   Home: undefined;
   Applications: undefined;
   Statistics: undefined;
-  Settings: undefined;
+  Profile: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =

@@ -3,21 +3,11 @@ import { useState, useCallback } from "react";
 import { Button } from "react-native-paper";
 import { Text, View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
-import DateTimePicker from "@react-native-community/datetimepicker";
 
-export default function SettingsScreen({
-  navigation,
-}: RootTabScreenProps<"Settings">) {
-  const [date, setDate] = useState(new Date());
-
-  const setNewDate = (event, selectedDate) => {
-    setDate(selectedDate);
-  };
-
+export default function SettingsModalScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text>selected: {date.toLocaleDateString()}</Text>
-      <DateTimePicker value={date} onChange={setNewDate} />
+      <Text>Settings</Text>
     </View>
   );
 }

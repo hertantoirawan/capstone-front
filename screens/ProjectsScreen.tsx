@@ -16,9 +16,6 @@ import axios from "axios";
 import { Text, View } from "../components/Themed";
 
 export default function ProjectsScreen({ route, navigation }) {
-  const [company, setCompany] = useState("");
-  const [role, setRole] = useState("");
-
   const [isSnackbarVisible, setSnackbarVisibility] = useState(false);
 
   const onDismissSnackBar = () => setSnackbarVisibility(false);
@@ -102,11 +99,11 @@ export default function ProjectsScreen({ route, navigation }) {
                 <Checkbox
                   {...props}
                   status={isRepoSelected(item) ? "checked" : "unchecked"}
-                  onPress={() => {
-                    handleSelectRepository(item);
-                  }}
                 />
               )}
+              onPress={() => {
+                handleSelectRepository(item);
+              }}
             />
           </>
         )}
@@ -126,7 +123,9 @@ export default function ProjectsScreen({ route, navigation }) {
 
   const handleNext = () => {
     navigation.navigate("ProjectDetails", {
-      repositories: selectedRepositoryList,
+      resume: {
+        repositories: selectedRepositoryList,
+      },
     });
   };
 

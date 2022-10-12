@@ -7,7 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Text, View } from "../components/Themed";
 
 export default function EducationScreen({ route, navigation }) {
-  const repositories = route.params.repositories;
+  const repositories = route.params.resume.repositories;
   console.log(repositories);
 
   const [company, setCompany] = useState("");

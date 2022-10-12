@@ -39,9 +39,9 @@ const linking: LinkingOptions<RootStackParamList> = {
               StatisticsScreen: "statistics",
             },
           },
-          Settings: {
+          Profile: {
             screens: {
-              SettingsScreen: "settings",
+              ProfileScreen: "profile",
             },
           },
         },

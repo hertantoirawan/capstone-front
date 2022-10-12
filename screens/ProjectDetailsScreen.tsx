@@ -33,7 +33,7 @@ export default function ProjectDetailsScreen({ route, navigation }) {
   };
 
   const [repositories, setRepositories] = useState<Repository[]>(
-    route.params.repositories
+    route.params.resume.repositories
   );
 
   interface Repository {
@@ -90,7 +90,11 @@ export default function ProjectDetailsScreen({ route, navigation }) {
   };
 
   const handleNext = () => {
-    navigation.navigate("Education", { repositories: repositories });
+    navigation.navigate("Education", {
+      resume: {
+        repositories: repositories,
+      },
+    });
   };
 
   return (

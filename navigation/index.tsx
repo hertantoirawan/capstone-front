@@ -21,7 +21,8 @@ import ApplicationsScreen from "../screens/ApplicationsScreen";
 import StatisticsScreen from "../screens/StatisticsScreen";
 import LoginScreen from "../screens/LoginScreen";
 import HomeScreen from "../screens/HomeScreen";
-import SettingsScreen from "../screens/SettingsScreen";
+import SettingsModalScreen from "../screens/SettingsModalScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 import ResumeScreen from "../screens/ResumeScreen";
 import ProjectsScreen from "../screens/ProjectsScreen";
 import ProjectDetailsScreen from "../screens/ProjectDetailsScreen";
@@ -96,6 +97,11 @@ function RootNavigator() {
           component={ApplyModalScreen}
           options={{ title: "Apply" }}
         />
+        <Stack.Screen
+          name="SettingsModal"
+          component={SettingsModalScreen}
+          options={{ title: "Settings" }}
+        />
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -135,21 +141,6 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => (
             <Ionicons name="list" color={color} size={24} />
           ),
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate("Modal")}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}
-            >
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
         })}
       />
       <BottomTab.Screen
@@ -163,14 +154,29 @@ function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{
-          title: "Settings",
+        name="Profile"
+        component={ProfileScreen}
+        options={({ navigation }: RootTabScreenProps<"Profile">) => ({
+          title: "Profile",
           tabBarIcon: ({ color }) => (
-            <Ionicons name="settings" color={color} size={24} />
+            <Ionicons name="person" color={color} size={24} />
           ),
-        }}
+          headerRight: ({ color }) => (
+            <Pressable
+              onPress={() => navigation.navigate("SettingsModal")}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}
+            >
+              <Ionicons
+                name="settings"
+                color={color}
+                size={24}
+                style={{ marginRight: 15 }}
+              />
+            </Pressable>
+          ),
+        })}
       />
     </BottomTab.Navigator>
   );
