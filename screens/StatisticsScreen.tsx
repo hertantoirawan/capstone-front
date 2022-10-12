@@ -42,7 +42,7 @@ export default function StatisticsScreen() {
   return (
     <View style={styles.container}>
       <ScrollView showsHorizontalScrollIndicator={false}>
-        <View>
+        {/* <View>
           <BarChart
             data={data}
             width={Dimensions.get("window").width}
@@ -87,7 +87,7 @@ export default function StatisticsScreen() {
               borderRadius: 16,
             }}
           />
-        </View>
+        </View> */}
         <View>
           <ContributionGraph
             values={contributions}

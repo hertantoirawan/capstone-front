@@ -23,6 +23,9 @@ import LoginScreen from "../screens/LoginScreen";
 import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import ResumeScreen from "../screens/ResumeScreen";
+import ProjectsScreen from "../screens/ProjectsScreen";
+import ProjectDetailsScreen from "../screens/ProjectDetailsScreen";
+import EducationScreen from "../screens/EducationScreen";
 
 import ApplicationModalScreen from "../screens/ApplicationModalScreen";
 import ApplyModalScreen from "../screens/ApplyModalScreen";
@@ -70,6 +73,13 @@ function RootNavigator() {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="Resume" component={ResumeScreen} />
+      <Stack.Screen name="Projects" component={ProjectsScreen} />
+      <Stack.Screen
+        name="ProjectDetails"
+        component={ProjectDetailsScreen}
+        options={{ title: "Project Details" }}
+      />
+      <Stack.Screen name="Education" component={EducationScreen} />
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}

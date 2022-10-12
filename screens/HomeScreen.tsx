@@ -33,11 +33,12 @@ const resumes = [
   },
 ];
 
-const handleAddNewResume = () => {
-  console.log("Adding new resume...");
-};
-
 export default function HomeScreen({ navigation }) {
+  const handleAddNewResume = () => {
+    console.log("Adding new resume...");
+    navigation.navigate("Projects");
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   cover: {
-    height: 150,
+    height: 100,
   },
   tags: {
     flex: 1,
