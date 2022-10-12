@@ -26,6 +26,7 @@ import ProfileScreen from "../screens/ProfileScreen";
 import ResumeScreen from "../screens/ResumeScreen";
 import ProjectsScreen from "../screens/ProjectsScreen";
 import ProjectDetailsScreen from "../screens/ProjectDetailsScreen";
+import WorkExperienceScreen from "../screens/WorkExperienceScreen";
 import EducationScreen from "../screens/EducationScreen";
 
 import ApplicationModalScreen from "../screens/ApplicationModalScreen";
@@ -78,7 +79,12 @@ function RootNavigator() {
       <Stack.Screen
         name="ProjectDetails"
         component={ProjectDetailsScreen}
-        options={{ title: "Project Details" }}
+        options={{ title: "Details" }}
+      />
+      <Stack.Screen
+        name="WorkExperience"
+        component={WorkExperienceScreen}
+        options={{ title: "Work" }}
       />
       <Stack.Screen name="Education" component={EducationScreen} />
       <Stack.Screen

@@ -14,52 +14,44 @@ import { Ionicons } from "@expo/vector-icons";
 
 import { Text, View } from "../components/Themed";
 
-const education = [
+const workExperience = [
   {
     id: 1,
-    school: "Foothill Junior College",
-    degree: "Associate Degree (Computer Science)",
-    start: "",
-    end: "1/1/2010",
-    description: "",
+    role: "Software Engineer",
+    company: "Google",
+    start: "1/1/2012",
+    end: "12/31/2017",
+    contribution: "Implemented google search",
   },
   {
     id: 2,
-    school: "University of California, San Diego",
-    degree: "Bachelor of Science (Computer Science)",
-    start: "",
-    end: "1/1/2012",
-    description: "",
-  },
-  {
-    id: 3,
-    school: "Rocket Academy",
-    degree: "Software Engineering Bootcamp",
-    start: "",
-    end: "1/1/2022",
-    description: "",
+    role: "Software Engineer",
+    company: "Facebook",
+    start: "1/1/2018",
+    end: "",
+    contribution: "Implemented Facebook Messenger",
   },
 ];
 
-export default function EducationScreen({ route, navigation }) {
+export default function WorkExperienceScreen({ route, navigation }) {
   const [isSnackbarVisible, setSnackbarVisibility] = useState(false);
   const onDismissSnackBar = () => setSnackbarVisibility(false);
 
   const handleNext = () => {
-    navigation.navigate("Home", {
+    navigation.navigate("Education", {
       resume: route.params.resume,
     });
   };
 
-  const isEducationSelected = (item) => {
+  const isWorkExperienceSelected = (item) => {
     return false;
   };
 
-  const handleSelectEducation = (item) => {
+  const handleSelectWorkExperience = (item) => {
     console.log(`select education: ${item}`);
   };
 
-  const EducationList = ({ items }) => {
+  const WorkExperienceList = ({ items }) => {
     return (
       <FlatList
         data={items}
@@ -67,16 +59,20 @@ export default function EducationScreen({ route, navigation }) {
           <>
             <Divider />
             <List.Item
-              title={item.school}
-              description={`${item.degree}, ${moment(item.end).format("YYYY")}`}
+              title={`${item.role} at ${item.company}`}
+              description={`${moment(item.start).format("YYYY")} - ${
+                item.end ? moment(item.end).format("YYYY") : "Present"
+              }`}
               right={(props) => (
                 <Checkbox
                   {...props}
-                  status={isEducationSelected(item) ? "checked" : "unchecked"}
+                  status={
+                    isWorkExperienceSelected(item) ? "checked" : "unchecked"
+                  }
                 />
               )}
               onPress={() => {
-                handleSelectEducation(item);
+                handleSelectWorkExperience(item);
               }}
             />
           </>
@@ -88,7 +84,7 @@ export default function EducationScreen({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <EducationList items={education} />
+      <WorkExperienceList items={workExperience} />
       <Button style={styles.button} mode="contained" onPress={handleNext}>
         Next
       </Button>

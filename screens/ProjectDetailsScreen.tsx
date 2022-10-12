@@ -90,7 +90,7 @@ export default function ProjectDetailsScreen({ route, navigation }) {
   };
 
   const handleNext = () => {
-    navigation.navigate("Education", {
+    navigation.navigate("WorkExperience", {
       resume: {
         repositories: repositories,
       },

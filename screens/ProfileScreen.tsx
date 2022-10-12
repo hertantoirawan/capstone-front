@@ -3,63 +3,9 @@ import { useState } from "react";
 import { StyleSheet, useWindowDimensions } from "react-native";
 import { TextInput } from "react-native-paper";
 import { TabView, SceneMap } from "react-native-tab-view";
-
-const GeneralRoute = () => (
-  <View style={styles.inputs}>
-    <TextInput
-      style={styles.input}
-      mode="outlined"
-      label="Company"
-      // value={company}
-      // onChangeText={(comp) => setCompany(comp)}
-    />
-    <TextInput
-      style={styles.input}
-      mode="outlined"
-      label="Role"
-      // value={role}
-      // onChangeText={(jobRole) => setRole(jobRole)}
-    />
-  </View>
-);
-
-const WorkExperienceRoute = () => (
-  <View style={styles.inputs}>
-    <TextInput
-      style={styles.input}
-      mode="outlined"
-      label="Company"
-      // value={company}
-      // onChangeText={(comp) => setCompany(comp)}
-    />
-    <TextInput
-      style={styles.input}
-      mode="outlined"
-      label="Role"
-      // value={role}
-      // onChangeText={(jobRole) => setRole(jobRole)}
-    />
-  </View>
-);
-
-const EducationRoute = () => (
-  <View style={styles.inputs}>
-    <TextInput
-      style={styles.input}
-      mode="outlined"
-      label="Company"
-      // value={company}
-      // onChangeText={(comp) => setCompany(comp)}
-    />
-    <TextInput
-      style={styles.input}
-      mode="outlined"
-      label="Role"
-      // value={role}
-      // onChangeText={(jobRole) => setRole(jobRole)}
-    />
-  </View>
-);
+import GeneralRoute from "./GeneralProfileScreen";
+import WorkExperienceRoute from "./WorkProfileScreen";
+import EducationRoute from "./EducationProfileScreen";
 
 const renderScene = SceneMap({
   general: GeneralRoute,

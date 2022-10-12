@@ -21,6 +21,7 @@ export type RootStackParamList = {
   Resume: undefined;
   Projects: undefined;
   ProjectDetails: undefined;
+  WorkExperience: undefined;
   Education: undefined;
   SettingsModal: undefined;
   Root: NavigatorScreenParams<RootTabParamList> | undefined;

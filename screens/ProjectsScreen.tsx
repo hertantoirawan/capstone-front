@@ -1,30 +1,13 @@
 import { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Platform, StyleSheet, FlatList } from "react-native";
-import {
-  TextInput,
-  Button,
-  Snackbar,
-  Divider,
-  Card,
-  List,
-  Checkbox,
-} from "react-native-paper";
+import { TextInput, Button, Divider, List, Checkbox } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 
 import { Text, View } from "../components/Themed";
 
 export default function ProjectsScreen({ route, navigation }) {
-  const [isSnackbarVisible, setSnackbarVisibility] = useState(false);
-
-  const onDismissSnackBar = () => setSnackbarVisibility(false);
-
-  const saveApplication = () => {
-    console.log("save application");
-    setSnackbarVisibility(true);
-  };
-
   const [repositories, setRepositories] = useState<Repository[]>([]);
   const [repositoryList, setRepositoryList] = useState<Repository[]>([]);
   const [selectedRepositoryList, setSelectedRepositoryList] = useState<
@@ -143,16 +126,6 @@ export default function ProjectsScreen({ route, navigation }) {
       <Button style={styles.input} mode="contained" onPress={handleNext}>
         Next
       </Button>
-
-      <Snackbar
-        visible={isSnackbarVisible}
-        onDismiss={onDismissSnackBar}
-        action={{
-          label: "Dismiss",
-        }}
-      >
-        Application has been saved.
-      </Snackbar>
 
       {/* Use a light status bar on iOS to account for the black space above the modal */}
       <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
