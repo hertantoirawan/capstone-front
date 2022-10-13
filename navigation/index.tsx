@@ -16,12 +16,12 @@ import { ColorSchemeName, Pressable } from "react-native";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
+
 import NotFoundScreen from "../screens/NotFoundScreen";
 import ApplicationsScreen from "../screens/ApplicationsScreen";
 import StatisticsScreen from "../screens/StatisticsScreen";
 import LoginScreen from "../screens/LoginScreen";
 import HomeScreen from "../screens/HomeScreen";
-import SettingsModalScreen from "../screens/SettingsModalScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import ResumeScreen from "../screens/ResumeScreen";
 import ProjectsScreen from "../screens/ProjectsScreen";
@@ -29,8 +29,11 @@ import ProjectDetailsScreen from "../screens/ProjectDetailsScreen";
 import WorkExperienceScreen from "../screens/WorkExperienceScreen";
 import EducationScreen from "../screens/EducationScreen";
 
+import SettingsModalScreen from "../screens/SettingsModalScreen";
 import ApplicationModalScreen from "../screens/ApplicationModalScreen";
 import ApplyModalScreen from "../screens/ApplyModalScreen";
+import AddWorkModalScreen from "../screens/AddWorkModalScreen";
+import AddEducationModalScreen from "../screens/AddEducationModalScreen";
 
 import {
   RootStackParamList,
@@ -107,6 +110,16 @@ function RootNavigator() {
           name="SettingsModal"
           component={SettingsModalScreen}
           options={{ title: "Settings" }}
+        />
+        <Stack.Screen
+          name="AddWorkModal"
+          component={AddWorkModalScreen}
+          options={{ title: "Add Work Experience" }}
+        />
+        <Stack.Screen
+          name="AddEducationModal"
+          component={AddEducationModalScreen}
+          options={{ title: "Add Education" }}
         />
       </Stack.Group>
     </Stack.Navigator>

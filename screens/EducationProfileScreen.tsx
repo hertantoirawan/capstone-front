@@ -2,6 +2,7 @@ import { View, Text } from "../components/Themed";
 import { TextInput, Button, FAB, Card } from "react-native-paper";
 import { StyleSheet, FlatList } from "react-native";
 import moment from "moment";
+import { useNavigation } from "@react-navigation/native";
 
 const education = [
   {
@@ -30,9 +31,12 @@ const education = [
   },
 ];
 
-export default function EducationProfileScreen({ navigation }) {
+export default function EducationProfileScreen() {
+  const navigation = useNavigation();
+
   const addEducation = () => {
     console.log("add education");
+    navigation.navigate("AddEducationModal");
   };
 
   return (

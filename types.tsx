@@ -26,6 +26,8 @@ export type RootStackParamList = {
   SettingsModal: undefined;
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   ApplicationModal: undefined;
+  AddWorkModal: undefined;
+  AddEducationModal: undefined;
   ApplyModal: undefined;
   NotFound: undefined;
 };

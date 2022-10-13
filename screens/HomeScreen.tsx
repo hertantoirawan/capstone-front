@@ -3,7 +3,6 @@ import { Card, Chip, FAB } from "react-native-paper";
 import { View, Text } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 import React from "react";
-import ApplicationModalScreen from "./ApplicationModalScreen";
 
 const resumes = [
   {

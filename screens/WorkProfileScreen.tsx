@@ -1,6 +1,7 @@
 import { View, Text } from "../components/Themed";
 import { TextInput, Button, FAB, Card } from "react-native-paper";
 import { StyleSheet, FlatList } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const workExperience = [
   {
@@ -21,9 +22,12 @@ const workExperience = [
   },
 ];
 
-export default function WorkProfileScreen({ navigation }) {
+export default function WorkProfileScreen() {
+  const navigation = useNavigation();
+
   const addWorkExperience = () => {
-    console.log("add work experience");
+    console.log("add work experience.");
+    navigation.navigate("AddWorkModal");
   };
 
   return (
