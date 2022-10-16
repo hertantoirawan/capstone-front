@@ -2,37 +2,24 @@ import { StyleSheet, FlatList } from "react-native";
 import { Card, Chip, FAB } from "react-native-paper";
 import { View, Text } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
-import React from "react";
-
-const resumes = [
-  {
-    id: 1,
-    name: "Frontend Engineer",
-    description:
-      "Resume for software engineering roles that focus on frontend.",
-    tags: ["engineer", "senior", "frontend"],
-  },
-  {
-    id: 2,
-    name: "Backend Engineer",
-    description: "Resume for software engineering roles that focus on backend.",
-    tags: ["engineer", "junior", "backend"],
-  },
-  {
-    id: 3,
-    name: "Full Stack Developer",
-    description: "Resume for full stack software engineering roles.",
-    tags: ["frontend", "backend"],
-  },
-  {
-    id: 4,
-    name: "Project Manager",
-    description: "Resume for project management or team leading roles",
-    tags: ["project", "lead", "agile", "waterfall"],
-  },
-];
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { APP_BACKEND_URL } from "@env";
 
 export default function HomeScreen({ navigation }) {
+  const [user, setUser] = useState(null);
+  const [resume, setResume] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${APP_BACKEND_URL}/user/1/resume`)
+      .then((res) => {
+        setResume(res.data);
+        console.log(res.data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   const handleAddNewResume = () => {
     console.log("Adding new resume...");
     navigation.navigate("Projects");
@@ -41,7 +28,7 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <FlatList
-        data={resumes}
+        data={resume}
         renderItem={({ item }) => (
           <Card
             key={item.id}
@@ -55,9 +42,9 @@ export default function HomeScreen({ navigation }) {
             />
             <Card.Title title={item.name} subtitle={item.description} />
             <Card.Content style={styles.tags}>
-              {item.tags.map((tag) => (
-                <Chip key={`${item.id}-${tag}`} style={{ marginRight: 8 }}>
-                  {tag}
+              {item.tags.map(({ name }) => (
+                <Chip key={`${item.id}-${name}`} style={{ marginRight: 8 }}>
+                  {name}
                 </Chip>
               ))}
             </Card.Content>

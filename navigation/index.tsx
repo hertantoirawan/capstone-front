@@ -19,7 +19,6 @@ import useColorScheme from "../hooks/useColorScheme";
 
 import NotFoundScreen from "../screens/NotFoundScreen";
 import ApplicationsScreen from "../screens/ApplicationsScreen";
-import StatisticsScreen from "../screens/StatisticsScreen";
 import LoginScreen from "../screens/LoginScreen";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
@@ -161,16 +160,6 @@ function BottomTabNavigator() {
             <Ionicons name="list" color={color} size={24} />
           ),
         })}
-      />
-      <BottomTab.Screen
-        name="Statistics"
-        component={StatisticsScreen}
-        options={{
-          title: "Statistics",
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="pie-chart" color={color} size={24} />
-          ),
-        }}
       />
       <BottomTab.Screen
         name="Profile"

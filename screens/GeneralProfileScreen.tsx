@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native";
 const user = {
   name: "Hertanto Irawan",
   profile: "Software engineer with 10+ years of experience in Asia and the US.",
-  websites: [{ id: 1, name: "linkedin", link: "linkedin.com/in/hertantolie" }],
+  website: "linkedin.com/in/hertantolie",
   email: "hertanto.irawan@outlook.com",
   phone: "+628979655562",
 };
@@ -29,15 +29,12 @@ export default function GeneralProfileScreen({ navigation }) {
         label="Email"
         value={user.email}
       />
-      {user.websites.map((website) => (
-        <TextInput
-          key={website.id}
-          style={styles.input}
-          mode="outlined"
-          label="Website"
-          value={website.link}
-        />
-      ))}
+      <TextInput
+        style={styles.input}
+        mode="outlined"
+        label="Website"
+        value={user.website}
+      />
       <TextInput
         style={styles.input}
         mode="outlined"

@@ -3,23 +3,13 @@ import { StyleSheet } from "react-native";
 import { DataTable } from "react-native-paper";
 import { Text, View } from "../components/Themed";
 import moment from "moment";
+import axios from "axios";
+import { APP_BACKEND_URL } from "@env";
 
 const ITEMS_PER_PAGE = 10;
 
-const applications = [
-  { id: 1, role: "Software Engineer", company: "Google", date: "10/1/2022" },
-  { id: 2, role: "Project Manager", company: "Stripe", date: "10/1/2022" },
-  { id: 3, role: "Frontend Engineer", company: "Grab", date: "10/1/2022" },
-  { id: 4, role: "Software Engineer", company: "ZenDesk", date: "10/1/2022" },
-  { id: 5, role: "Backend Engineer", company: "Binance", date: "10/2/2022" },
-  { id: 6, role: "Software Engineer", company: "Coinbase", date: "10/2/2022" },
-  { id: 7, role: "Frontend Engineer", company: "Gojek", date: "10/2/2022" },
-  { id: 8, role: "Backend Engineer", company: "Traveloka", date: "10/3/2022" },
-  { id: 9, role: "Software Engineer", company: "Facebook", date: "10/3/2022" },
-  { id: 10, role: "Software Engineer", company: "Apple", date: "10/3/2022" },
-];
-
 export default function ApplicationsScreen({ navigation }) {
+  const [applications, setApplications] = useState([]);
   const [page, setPage] = useState<number>(0);
   const [numberOfItemsPerPage, setNumberOfItemsPerPage] =
     useState(ITEMS_PER_PAGE);
@@ -27,6 +17,14 @@ export default function ApplicationsScreen({ navigation }) {
   const to = Math.min((page + 1) * numberOfItemsPerPage, applications.length);
 
   useEffect(() => {
+    axios
+      .get(`${APP_BACKEND_URL}/user/1/application`)
+      .then((res) => {
+        setApplications(res.data);
+        console.log(res.data);
+      })
+      .catch((error) => console.log(error));
+
     setPage(0);
   }, [numberOfItemsPerPage]);
 
@@ -59,7 +57,7 @@ export default function ApplicationsScreen({ navigation }) {
               </DataTable.Cell>
               <DataTable.Cell>{application.company}</DataTable.Cell>
               <DataTable.Cell>
-                {moment(application.date, "MM/DD/YYYY").fromNow()}
+                {moment(application.date, "YYYY-MM-DD").fromNow()}
               </DataTable.Cell>
             </DataTable.Row>
           ))}

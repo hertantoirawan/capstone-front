@@ -6,6 +6,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { shareAsync } from "expo-sharing";
 import * as Print from "expo-print";
 import moment from "moment";
+import { APP_BACKEND_URL } from "@env";
+import axios from "axios";
 
 import { Text, View } from "../components/Themed";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -27,7 +29,10 @@ export default function ApplyModalScreen({ route }) {
 
   const printToFile = async () => {
     // On iOS/android prints the given html. On web prints the HTML from the current page.
-    await shareAsync(resume, { UTI: ".pdf", mimeType: "application/pdf" });
+    await shareAsync(resume.image, {
+      UTI: ".pdf",
+      mimeType: "application/pdf",
+    });
   };
 
   const [date, setDate] = useState(new Date());
@@ -52,6 +57,19 @@ export default function ApplyModalScreen({ route }) {
 
   const saveApplication = () => {
     console.log("save application");
+
+    axios
+      .post(`${APP_BACKEND_URL}/user/1/application`, {
+        role: role,
+        company: company,
+        date: date,
+        resumeId: resume.id,
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => console.log(error));
+
     setSnackbarVisibility(true);
   };
 
