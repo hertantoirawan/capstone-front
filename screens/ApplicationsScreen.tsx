@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
-import { StyleSheet } from "react-native";
-import { DataTable } from "react-native-paper";
+import {
+  StyleSheet,
+  FlatList,
+  ActivityIndicator,
+  RefreshControl,
+} from "react-native";
+import { DataTable, Card } from "react-native-paper";
 import { Text, View } from "../components/Themed";
 import moment from "moment";
 import axios from "axios";
@@ -10,23 +15,22 @@ const ITEMS_PER_PAGE = 10;
 
 export default function ApplicationsScreen({ navigation }) {
   const [applications, setApplications] = useState([]);
-  const [page, setPage] = useState<number>(0);
-  const [numberOfItemsPerPage, setNumberOfItemsPerPage] =
-    useState(ITEMS_PER_PAGE);
-  const from = page * numberOfItemsPerPage;
-  const to = Math.min((page + 1) * numberOfItemsPerPage, applications.length);
+  const [refreshing, setRefreshing] = useState(true);
 
-  useEffect(() => {
+  const getApplications = () => {
     axios
       .get(`${APP_BACKEND_URL}/user/1/application`)
       .then((res) => {
         setApplications(res.data);
+        setRefreshing(false);
         console.log(res.data);
       })
       .catch((error) => console.log(error));
+  };
 
-    setPage(0);
-  }, [numberOfItemsPerPage]);
+  useEffect(() => {
+    getApplications();
+  }, []);
 
   const handleRowClick = (application) => {
     // open application details
@@ -35,41 +39,32 @@ export default function ApplicationsScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <DataTable>
-        <DataTable.Header>
-          <DataTable.Title style={{ flex: 2 }}>Role</DataTable.Title>
-          <DataTable.Title>Company</DataTable.Title>
-          <DataTable.Title>Date</DataTable.Title>
-        </DataTable.Header>
-
-        {applications
-          .slice(
-            page * numberOfItemsPerPage,
-            page * numberOfItemsPerPage + numberOfItemsPerPage
-          )
-          .map((application) => (
-            <DataTable.Row
-              key={application.id}
-              onPress={() => handleRowClick(application)}
-            >
-              <DataTable.Cell style={{ flex: 2 }}>
-                {application.role}
-              </DataTable.Cell>
-              <DataTable.Cell>{application.company}</DataTable.Cell>
-              <DataTable.Cell>
-                {moment(application.date, "YYYY-MM-DD").fromNow()}
-              </DataTable.Cell>
-            </DataTable.Row>
-          ))}
-
-        <DataTable.Pagination
-          page={page}
-          numberOfPages={Math.ceil(applications.length / numberOfItemsPerPage)}
-          onPageChange={(page) => setPage(page)}
-          label={`${from + 1}-${to} of ${applications.length}`}
-          numberOfItemsPerPage={numberOfItemsPerPage}
-        />
-      </DataTable>
+      {refreshing ? <ActivityIndicator /> : null}
+      <FlatList
+        data={applications}
+        renderItem={({ item }) => (
+          <Card
+            key={item.id}
+            style={styles.card}
+            mode="outlined"
+            onPress={() => handleRowClick(item)}
+          >
+            <Card.Title
+              title={item.role}
+              subtitle={item.company}
+              right={(props) => (
+                <Text {...props} style={{ marginRight: 16 }}>
+                  {moment(item.date).format("DD MMM YYYY")}
+                </Text>
+              )}
+            />
+          </Card>
+        )}
+        showsHorizontalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={getApplications} />
+        }
+      />
     </View>
   );
 }
@@ -77,9 +72,6 @@ export default function ApplicationsScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "flex-start",
-    justifyContent: "center",
-    padding: 10,
   },
   title: {
     fontSize: 20,
