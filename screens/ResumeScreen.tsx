@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { Button, Chip } from "react-native-paper";
 import { StyleSheet, Image, Platform } from "react-native";
 import * as Print from "expo-print";
+import * as Sharing from "expo-sharing";
+import * as FileSystem from "expo-file-system";
 import { WebView } from "react-native-webview";
-import Navigation from "../navigation";
 
 export default function Resume({ route, navigation }) {
   const resume = route.params.resume;
@@ -19,14 +20,39 @@ export default function Resume({ route, navigation }) {
     website: "https://github.com/hertantoirawan",
   };
 
+  const setPDFfileName = (uri: string) => {
+    const fileUserName = user.name.replace(" ", "_");
+    const resumeName = resume.name.replace(" ", "_");
+
+    const today = new Date();
+    const fileDate = `${today.getFullYear()}${
+      today.getMonth() + 1
+    }${today.getDate()}`;
+
+    const pdfName = `${uri.slice(
+      0,
+      uri.lastIndexOf("/") + 1
+    )}resume_${fileUserName}-${resumeName}-${fileDate}.pdf`;
+
+    return pdfName;
+  };
+
   useEffect(() => {
     const displayResume = async () => {
       const { uri } = await Print.printToFileAsync({
         html,
       });
-      console.log("File has been saved to:", uri);
-      setResumeImage(uri);
-      resume.image = uri;
+
+      const pdfName = setPDFfileName(uri);
+
+      await FileSystem.moveAsync({
+        from: uri,
+        to: pdfName,
+      });
+
+      console.log("File has been saved to:", pdfName);
+      setResumeImage(pdfName);
+      resume.image = pdfName;
     };
 
     displayResume();
