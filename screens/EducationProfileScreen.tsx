@@ -1,38 +1,36 @@
 import { View, Text } from "../components/Themed";
 import { TextInput, Button, FAB, Card } from "react-native-paper";
-import { StyleSheet, FlatList } from "react-native";
+import {
+  StyleSheet,
+  FlatList,
+  RefreshControl,
+  ActivityIndicator,
+} from "react-native";
+import { useState, useEffect } from "react";
 import moment from "moment";
 import { useNavigation } from "@react-navigation/native";
-
-const education = [
-  {
-    id: 1,
-    school: "Foothill Junior College",
-    degree: "Associate Degree (Computer Science)",
-    start: "",
-    end: "1/1/2010",
-    description: "",
-  },
-  {
-    id: 2,
-    school: "University of California, San Diego",
-    degree: "Bachelor of Science (Computer Science)",
-    start: "",
-    end: "1/1/2012",
-    description: "",
-  },
-  {
-    id: 3,
-    school: "Rocket Academy",
-    degree: "Software Engineering Bootcamp",
-    start: "",
-    end: "1/1/2022",
-    description: "",
-  },
-];
+import axios from "axios";
+import { APP_BACKEND_URL } from "@env";
 
 export default function EducationProfileScreen() {
   const navigation = useNavigation();
+  const [education, setEducation] = useState([]);
+  const [refreshing, setRefreshing] = useState(true);
+
+  const getEducation = () => {
+    axios
+      .get(`${APP_BACKEND_URL}/user/1/education`)
+      .then((res) => {
+        setEducation(res.data);
+        setRefreshing(false);
+        console.log(res.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    getEducation();
+  }, []);
 
   const addEducation = () => {
     console.log("add education");
@@ -56,6 +54,9 @@ export default function EducationProfileScreen() {
           </Card>
         )}
         showsHorizontalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={getEducation} />
+        }
       />
       <FAB icon="plus" style={styles.fab} onPress={addEducation} />
     </View>
