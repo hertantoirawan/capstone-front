@@ -1,29 +1,36 @@
 import { View, Text } from "../components/Themed";
 import { TextInput, Button, FAB, Card } from "react-native-paper";
-import { StyleSheet, FlatList } from "react-native";
+import {
+  StyleSheet,
+  FlatList,
+  RefreshControl,
+  ActivityIndicator,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
-
-const workExperience = [
-  {
-    id: 1,
-    role: "Software Engineer",
-    company: "Google",
-    start: "1/1/2012",
-    end: "12/31/2017",
-    contribution: "Implemented google search",
-  },
-  {
-    id: 2,
-    role: "Software Engineer",
-    company: "Facebook",
-    start: "1/1/2018",
-    end: "",
-    contribution: "Implemented Facebook Messenger",
-  },
-];
+import { useState, useEffect } from "react";
+import moment from "moment";
+import axios from "axios";
+import { APP_BACKEND_URL } from "@env";
 
 export default function WorkProfileScreen() {
   const navigation = useNavigation();
+  const [workExperience, setWorkExperience] = useState([]);
+  const [refreshing, setRefreshing] = useState(true);
+
+  const getWorkExperience = () => {
+    axios
+      .get(`${APP_BACKEND_URL}/user/1/work`)
+      .then((res) => {
+        setWorkExperience(res.data);
+        setRefreshing(false);
+        console.log(res.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    getWorkExperience();
+  }, []);
 
   const addWorkExperience = () => {
     console.log("add work experience.");
@@ -32,13 +39,16 @@ export default function WorkProfileScreen() {
 
   return (
     <View style={styles.container}>
+      {refreshing ? <ActivityIndicator /> : null}
       <FlatList
         data={workExperience}
         renderItem={({ item }) => (
           <Card key={item.id} style={styles.card} mode="outlined">
             <Card.Title
               title={`${item.role} at ${item.company}`}
-              subtitle={`${item.start} - ${item.end ? item.end : "Present"}`}
+              subtitle={`${moment(item.start).format("YYYY")} - ${
+                item.end ? moment(item.end).format("YYYY") : "Present"
+              }`}
             />
             <Card.Content style={styles.tags}>
               <Text>{item.contribution}</Text>
@@ -46,6 +56,12 @@ export default function WorkProfileScreen() {
           </Card>
         )}
         showsHorizontalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={getWorkExperience}
+          />
+        }
       />
       <FAB icon="plus" style={styles.fab} onPress={addWorkExperience} />
     </View>
