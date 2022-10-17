@@ -19,6 +19,8 @@ declare global {
 export type RootStackParamList = {
   Login: undefined;
   Resume: undefined;
+  NewResume: undefined;
+  ReviewNewResume: undefined;
   Projects: undefined;
   ProjectDetails: undefined;
   WorkExperience: undefined;

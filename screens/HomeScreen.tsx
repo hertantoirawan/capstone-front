@@ -22,7 +22,7 @@ export default function HomeScreen({ navigation }) {
 
   const handleAddNewResume = () => {
     console.log("Adding new resume...");
-    navigation.navigate("Projects");
+    navigation.navigate("NewResume");
   };
 
   return (

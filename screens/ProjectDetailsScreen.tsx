@@ -11,7 +11,6 @@ import {
 import {
   TextInput,
   Button,
-  Snackbar,
   Divider,
   Card,
   List,
@@ -23,13 +22,8 @@ import axios from "axios";
 import { Text, View } from "../components/Themed";
 
 export default function ProjectDetailsScreen({ route, navigation }) {
-  const [isSnackbarVisible, setSnackbarVisibility] = useState(false);
-
-  const onDismissSnackBar = () => setSnackbarVisibility(false);
-
   const saveApplication = () => {
     console.log("save application");
-    setSnackbarVisibility(true);
   };
 
   const [repositories, setRepositories] = useState<Repository[]>(
@@ -47,7 +41,7 @@ export default function ProjectDetailsScreen({ route, navigation }) {
     items: Repository[];
   }
 
-  const updateProps = (props, repoId, text) => {
+  const updateProps = (props: string, repoId, text: string) => {
     const repos = [...repositories];
     const repo = repos.find((repo) => repo.id === repoId);
     if (repo) {
@@ -61,7 +55,7 @@ export default function ProjectDetailsScreen({ route, navigation }) {
     return (
       <FlatList
         data={items}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <>
             <Divider />
             <List.Item title={item.name} description={item.description} />
@@ -69,7 +63,7 @@ export default function ProjectDetailsScreen({ route, navigation }) {
               style={styles.input}
               mode="outlined"
               label="Tech"
-              // onChangeText={(text) => updateProps("tech", item.id, text)}
+              onChangeText={(text) => updateProps("tech", item.id, text)}
               value={item.tech}
             />
             <TextInput
@@ -77,9 +71,9 @@ export default function ProjectDetailsScreen({ route, navigation }) {
               mode="outlined"
               label="Contribution"
               multiline={true}
-              // onChangeText={(text) =>
-              //   updateProps("contribution", item.id, text)
-              // }
+              onChangeText={(text) =>
+                updateProps("contribution", item.id, text)
+              }
               value={item.contribution}
             />
           </>
@@ -90,10 +84,10 @@ export default function ProjectDetailsScreen({ route, navigation }) {
   };
 
   const handleNext = () => {
+    const { resume } = route.params;
+
     navigation.navigate("WorkExperience", {
-      resume: {
-        repositories: repositories,
-      },
+      resume,
     });
   };
 
@@ -107,16 +101,6 @@ export default function ProjectDetailsScreen({ route, navigation }) {
       <Button style={styles.button} mode="contained" onPress={handleNext}>
         Next
       </Button>
-
-      <Snackbar
-        visible={isSnackbarVisible}
-        onDismiss={onDismissSnackBar}
-        action={{
-          label: "Dismiss",
-        }}
-      >
-        Application has been saved.
-      </Snackbar>
 
       {/* Use a light status bar on iOS to account for the black space above the modal */}
       <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />

@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Platform, StyleSheet, FlatList } from "react-native";
-import { TextInput, Button, Divider, List, Checkbox } from "react-native-paper";
+import {
+  TextInput,
+  Button,
+  Divider,
+  List,
+  Checkbox,
+  Searchbar,
+} from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 
@@ -105,21 +112,21 @@ export default function ProjectsScreen({ route, navigation }) {
   };
 
   const handleNext = () => {
+    const { resume } = route.params;
+    resume.repositories = selectedRepositoryList;
+
     navigation.navigate("ProjectDetails", {
-      resume: {
-        repositories: selectedRepositoryList,
-      },
+      resume,
     });
   };
 
   return (
     <View style={styles.container}>
-      <TextInput
+      <Searchbar
         style={styles.input}
-        mode="outlined"
-        label="Search"
-        value={text}
+        placeholder="Search"
         onChangeText={handleSearch}
+        value={text}
       />
       <RepositoryList items={repositoryList} />
 

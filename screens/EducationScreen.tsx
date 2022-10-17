@@ -59,15 +59,18 @@ export default function EducationScreen({ route, navigation }) {
 
   useEffect(() => {
     getEducation();
+    console.log();
   }, []);
 
   const handleNext = () => {
-    navigation.navigate("Home", {
-      resume: {
-        repositories: route.params.resume,
-        work: route.params.work,
-        education: education,
-      },
+    const { resume } = route.params;
+    resume.education = education;
+
+    console.log("resume in education screen");
+    console.log(resume);
+
+    navigation.navigate("ReviewNewResume", {
+      resume,
     });
   };
 

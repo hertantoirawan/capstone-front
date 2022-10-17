@@ -34,12 +34,11 @@ export default function WorkExperienceScreen({ route, navigation }) {
   }, []);
 
   const handleNext = () => {
-    console.log(route.params.resume);
+    const { resume } = route.params;
+    resume.work = workExperience;
+
     navigation.navigate("Education", {
-      resume: {
-        repositories: route.params.resume,
-        work: workExperience,
-      },
+      resume,
     });
   };
 
