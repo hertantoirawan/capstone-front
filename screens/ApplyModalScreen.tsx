@@ -117,7 +117,7 @@ export default function ApplyModalScreen({ route }) {
 
       <View style={styles.links}>
         <Button
-          style={styles.link}
+          style={styles.linkLeft}
           mode="contained"
           icon="share-variant"
           onPress={printToFile}
@@ -125,7 +125,7 @@ export default function ApplyModalScreen({ route }) {
           Share
         </Button>
         <Button
-          style={styles.link}
+          style={styles.linkRight}
           mode="contained"
           icon="printer"
           onPress={print}
@@ -172,10 +172,14 @@ const styles = StyleSheet.create({
   links: {
     padding: 20,
     paddingTop: 10,
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     flexDirection: "row",
   },
-  link: {
+  linkLeft: {
+    flex: 1,
+    marginRight: 16,
+  },
+  linkRight: {
     flex: 1,
   },
 });

@@ -47,7 +47,7 @@ export default function EducationProfileScreen() {
               title={item.school}
               subtitle={moment(item.end).format("YYYY")}
             />
-            <Card.Content style={styles.tags}>
+            <Card.Content>
               <Text>{item.degree}</Text>
               <Text>{item.description}</Text>
             </Card.Content>

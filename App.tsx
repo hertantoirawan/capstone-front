@@ -10,6 +10,7 @@ const theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
+    primary: "#2f95dc",
   },
 };
 
