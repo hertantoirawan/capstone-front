@@ -50,7 +50,7 @@ export default function WorkProfileScreen() {
                 item.end ? moment(item.end).format("YYYY") : "Present"
               }`}
             />
-            <Card.Content style={styles.tags}>
+            <Card.Content>
               <Text>{item.contribution}</Text>
             </Card.Content>
           </Card>

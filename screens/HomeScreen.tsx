@@ -1,4 +1,9 @@
-import { StyleSheet, FlatList } from "react-native";
+import {
+  StyleSheet,
+  FlatList,
+  RefreshControl,
+  ActivityIndicator,
+} from "react-native";
 import { Card, Chip, FAB } from "react-native-paper";
 import { View, Text } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
@@ -9,15 +14,21 @@ import { APP_BACKEND_URL } from "@env";
 export default function HomeScreen({ navigation }) {
   const [user, setUser] = useState(null);
   const [resume, setResume] = useState([]);
+  const [refreshing, setRefreshing] = useState(true);
 
-  useEffect(() => {
+  const getResumes = () => {
     axios
       .get(`${APP_BACKEND_URL}/user/1/resume`)
       .then((res) => {
         setResume(res.data);
+        setRefreshing(false);
         console.log(res.data);
       })
       .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    getResumes();
   }, []);
 
   const handleAddNewResume = () => {
@@ -27,6 +38,7 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      {refreshing ? <ActivityIndicator /> : null}
       <FlatList
         data={resume}
         renderItem={({ item }) => (
@@ -51,6 +63,9 @@ export default function HomeScreen({ navigation }) {
           </Card>
         )}
         showsHorizontalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={getResumes} />
+        }
       />
       <FAB icon="plus" style={styles.fab} onPress={handleAddNewResume} />
     </View>

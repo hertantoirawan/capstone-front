@@ -21,6 +21,59 @@ import axios from "axios";
 
 import { Text, View } from "../components/Themed";
 
+interface Repository {
+  id: number;
+  name: string;
+  description: string;
+  tech: string;
+  contribution: string;
+}
+interface RepositoryListProps {
+  items: Repository[];
+}
+
+const RepositoryList: React.FC<RepositoryListProps> = ({
+  items,
+  updateProps,
+}) => {
+  const [text, setText] = useState("");
+  const [multiText, setMultiText] = useState("");
+
+  return (
+    <FlatList
+      data={items}
+      renderItem={({ item }) => (
+        <>
+          <Divider />
+          <List.Item title={item.name} description={item.description} />
+          <TextInput
+            style={styles.input}
+            mode="outlined"
+            label="Tech"
+            onChangeText={(text) => setText(text)}
+            onBlur={() => {
+              updateProps("tech", item.id, text);
+            }}
+            value={item.tech}
+          />
+          <TextInput
+            style={styles.multilineInput}
+            mode="outlined"
+            label="Contribution"
+            multiline={true}
+            onChangeText={(text) => setMultiText(text)}
+            onBlur={() => {
+              updateProps("contribution", item.id, multiText);
+            }}
+            value={item.contribution}
+          />
+        </>
+      )}
+      showsHorizontalScrollIndicator={false}
+    />
+  );
+};
+
 export default function ProjectDetailsScreen({ route, navigation }) {
   const saveApplication = () => {
     console.log("save application");
@@ -30,57 +83,19 @@ export default function ProjectDetailsScreen({ route, navigation }) {
     route.params.resume.repositories
   );
 
-  interface Repository {
-    id: number;
-    name: string;
-    description: string;
-    tech: string;
-    contribution: string;
-  }
-  interface RepositoryListProps {
-    items: Repository[];
-  }
-
   const updateProps = (props: string, repoId, text: string) => {
     const repos = [...repositories];
-    const repo = repos.find((repo) => repo.id === repoId);
-    if (repo) {
-      repo[props] = text;
-      console.log(repo[props]);
-    }
-    setRepositories(repos);
-  };
 
-  const RepositoryList: React.FC<RepositoryListProps> = ({ items }) => {
-    return (
-      <FlatList
-        data={items}
-        renderItem={({ item, index }) => (
-          <>
-            <Divider />
-            <List.Item title={item.name} description={item.description} />
-            <TextInput
-              style={styles.input}
-              mode="outlined"
-              label="Tech"
-              onChangeText={(text) => updateProps("tech", item.id, text)}
-              value={item.tech}
-            />
-            <TextInput
-              style={styles.multilineInput}
-              mode="outlined"
-              label="Contribution"
-              multiline={true}
-              onChangeText={(text) =>
-                updateProps("contribution", item.id, text)
-              }
-              value={item.contribution}
-            />
-          </>
-        )}
-        showsHorizontalScrollIndicator={false}
-      />
-    );
+    setRepositories((prevState) => {
+      const repo = prevState.find((repo) => repo.id === repoId);
+
+      if (repo) {
+        repo[props] = text;
+        console.log(repo[props]);
+      }
+
+      return prevState;
+    });
   };
 
   const handleNext = () => {
@@ -96,7 +111,7 @@ export default function ProjectDetailsScreen({ route, navigation }) {
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <RepositoryList items={repositories} />
+      <RepositoryList items={repositories} updateProps={updateProps} />
 
       <Button style={styles.button} mode="contained" onPress={handleNext}>
         Next

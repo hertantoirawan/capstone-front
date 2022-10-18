@@ -15,33 +15,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 import { Text, View } from "../components/Themed";
 
-const education = [
-  {
-    id: 1,
-    school: "Foothill Junior College",
-    degree: "Associate Degree (Computer Science)",
-    start: "",
-    end: "1/1/2010",
-    description: "",
-  },
-  {
-    id: 2,
-    school: "University of California, San Diego",
-    degree: "Bachelor of Science (Computer Science)",
-    start: "",
-    end: "1/1/2012",
-    description: "",
-  },
-  {
-    id: 3,
-    school: "Rocket Academy",
-    degree: "Software Engineering Bootcamp",
-    start: "",
-    end: "1/1/2022",
-    description: "",
-  },
-];
-
 export default function EducationScreen({ route, navigation }) {
   const [education, setEducation] = useState([]);
   const [refreshing, setRefreshing] = useState(true);

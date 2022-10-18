@@ -36,10 +36,10 @@ export default function NewResumeScreen({ navigation }) {
 
   const [text, setText] = useState("");
   const addResumeTags = () => {
-    const tags: string[] = [...resumeTags];
+    const tags = [...resumeTags];
 
-    if (!tags.some((tag) => tag.toLowerCase() == text.toLowerCase())) {
-      tags.push(text);
+    if (!tags.some((tag) => tag.name.toLowerCase() == text.toLowerCase())) {
+      tags.push({ name: text });
       setResumeTags(tags);
     }
 
@@ -82,9 +82,9 @@ export default function NewResumeScreen({ navigation }) {
       </View>
 
       <View style={styles.tags}>
-        {resumeTags.map((tag) => (
-          <Chip key={tag} style={{ marginRight: 8 }}>
-            {tag}
+        {resumeTags.map(({ name }) => (
+          <Chip key={name} style={{ marginRight: 8 }}>
+            {name}
           </Chip>
         ))}
       </View>
