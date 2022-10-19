@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
   },
   multilineInput: {
     margin: 10,
+    marginTop: 0,
     height: 100,
   },
   button: {

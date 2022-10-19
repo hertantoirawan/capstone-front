@@ -36,13 +36,13 @@ const RepositoryList: React.FC<RepositoryListProps> = ({
   items,
   updateProps,
 }) => {
-  const [text, setText] = useState("");
-  const [multiText, setMultiText] = useState("");
+  const [text, setText] = useState({ editingIndex: -1, text: "" });
+  const [multiText, setMultiText] = useState({ editingIndex: -1, text: "" });
 
   return (
     <FlatList
       data={items}
-      renderItem={({ item }) => (
+      renderItem={({ item, index }) => (
         <>
           <Divider />
           <List.Item title={item.name} description={item.description} />
@@ -50,22 +50,40 @@ const RepositoryList: React.FC<RepositoryListProps> = ({
             style={styles.input}
             mode="outlined"
             label="Tech"
-            onChangeText={(text) => setText(text)}
+            value={text.editingIndex === index ? text.text : item.tech}
+            onFocus={() =>
+              setText({
+                editingIndex: index,
+                text: item.tech,
+              })
+            }
             onBlur={() => {
-              updateProps("tech", item.id, text);
+              updateProps("tech", item.id, text.text);
+              setText({ editingIndex: -1, text: "" });
             }}
-            value={item.tech}
+            onChangeText={(text) => setText({ text, editingIndex: index })}
           />
           <TextInput
             style={styles.multilineInput}
             mode="outlined"
             label="Contribution"
             multiline={true}
-            onChangeText={(text) => setMultiText(text)}
+            value={
+              multiText.editingIndex === index
+                ? multiText.text
+                : item.contribution
+            }
+            onFocus={() =>
+              setMultiText({
+                editingIndex: index,
+                text: item.contribution,
+              })
+            }
             onBlur={() => {
-              updateProps("contribution", item.id, multiText);
+              updateProps("contribution", item.id, multiText.text);
+              setMultiText({ editingIndex: -1, text: "" });
             }}
-            value={item.contribution}
+            onChangeText={(text) => setMultiText({ text, editingIndex: index })}
           />
         </>
       )}
@@ -75,10 +93,6 @@ const RepositoryList: React.FC<RepositoryListProps> = ({
 };
 
 export default function ProjectDetailsScreen({ route, navigation }) {
-  const saveApplication = () => {
-    console.log("save application");
-  };
-
   const [repositories, setRepositories] = useState<Repository[]>(
     route.params.resume.repositories
   );
