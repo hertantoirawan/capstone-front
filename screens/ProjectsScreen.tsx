@@ -13,6 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 
 import { Text, View } from "../components/Themed";
+import { useAuth } from "../hooks/useAuth";
 
 export default function ProjectsScreen({ route, navigation }) {
   const [repositories, setRepositories] = useState<Repository[]>([]);
@@ -27,10 +28,14 @@ export default function ProjectsScreen({ route, navigation }) {
     description: string;
   }
 
+  const { user } = useAuth();
+
   useEffect(() => {
     try {
       axios
-        .get<Repository[]>("https://api.github.com/users/hertantoirawan/repos")
+        .get<Repository[]>(
+          `https://api.github.com/users/${user.username}/repos`
+        )
         .then((response) => {
           console.log(response.data);
           setRepositories(response.data);

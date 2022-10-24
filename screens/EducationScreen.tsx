@@ -10,18 +10,19 @@ import {
 import { Card, Button, Divider, List, Checkbox } from "react-native-paper";
 import moment from "moment";
 import axios from "axios";
-import { APP_BACKEND_URL } from "@env";
 import { MaterialIcons } from "@expo/vector-icons";
-
 import { Text, View } from "../components/Themed";
+import { useAuth } from "../hooks/useAuth";
 
 export default function EducationScreen({ route, navigation }) {
   const [education, setEducation] = useState([]);
   const [refreshing, setRefreshing] = useState(true);
 
+  const { user } = useAuth();
+
   const getEducation = () => {
     axios
-      .get(`${APP_BACKEND_URL}/user/1/education`)
+      .get(`${process.env.APP_BACKEND_URL}/user/${user.id}/education`)
       .then((res) => {
         setEducation(res.data);
         setRefreshing(false);
@@ -32,7 +33,6 @@ export default function EducationScreen({ route, navigation }) {
 
   useEffect(() => {
     getEducation();
-    console.log();
   }, []);
 
   const handleNext = () => {

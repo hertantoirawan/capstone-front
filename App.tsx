@@ -4,6 +4,8 @@ import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
+import { AuthProvider } from "./components/AuthProvider";
+
 import Navigation from "./navigation";
 
 const theme = {
@@ -24,8 +26,10 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <PaperProvider theme={theme}>
-          <Navigation colorScheme={colorScheme} />
-          <StatusBar />
+          <AuthProvider>
+            <Navigation colorScheme={colorScheme} />
+            <StatusBar />
+          </AuthProvider>
         </PaperProvider>
       </SafeAreaProvider>
     );

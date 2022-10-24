@@ -6,8 +6,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { shareAsync } from "expo-sharing";
 import * as Print from "expo-print";
 import moment from "moment";
-import { APP_BACKEND_URL } from "@env";
 import axios from "axios";
+import { useAuth } from "../hooks/useAuth";
 
 import { Text, View } from "../components/Themed";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -18,6 +18,8 @@ export default function ApplyModalScreen({ route }) {
 
   const [company, setCompany] = useState("");
   const [role, setRole] = useState("");
+
+  const { user } = useAuth();
 
   const print = async () => {
     // On iOS/android prints the given html. On web prints the HTML from the current page.
@@ -59,7 +61,7 @@ export default function ApplyModalScreen({ route }) {
     console.log("save application");
 
     axios
-      .post(`${APP_BACKEND_URL}/user/1/application`, {
+      .post(`${process.env.APP_BACKEND_URL}/user/${user.id}/application`, {
         role: role,
         company: company,
         date: date,

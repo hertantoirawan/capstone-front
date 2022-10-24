@@ -6,22 +6,15 @@ import { StyleSheet, Image, Platform } from "react-native";
 import * as Print from "expo-print";
 import { WebView } from "react-native-webview";
 import axios from "axios";
-import { APP_BACKEND_URL } from "@env";
 import moment from "moment";
+import { useAuth } from "../hooks/useAuth";
 
 export default function ReviewNewResume({ route, navigation }) {
   const [template, setTemplate] = useState(null);
   const resume = route.params.resume;
   const [resumeImage, setResumeImage] = useState("");
   const [resumeHtml, setResumeHtml] = useState("");
-
-  const user = {
-    name: "Hertanto Irawan",
-    email: "hertanto.irawan@outlook.com",
-    phone: "+628979655562",
-    website: "https://github.com/hertantoirawan",
-    profile: "Software engineer with attention to details and hunger to learn.",
-  };
+  const [user, setUser] = useState(useAuth().user);
 
   const fillInResumeInfo = (selectedTemplate): string => {
     let filledInResume = selectedTemplate.htmlContent;
@@ -82,25 +75,34 @@ export default function ReviewNewResume({ route, navigation }) {
     return filledInResume;
   };
 
-  useEffect(() => {
-    const displayResume = async (html: string) => {
-      try {
-        const { uri } = await Print.printToFileAsync({
-          html,
-        });
+  const getUserInfo = async () => {
+    await axios
+      .get(`${process.env.APP_BACKEND_URL}/user/${user.id}`)
+      .then((res) => {
+        setUser(res.data);
+        console.log(res.data);
+      })
+      .catch((error) => console.log(error));
+  };
 
-        console.log("File has been saved to:", uri);
-        setResumeImage(uri);
-        setResumeHtml(html);
-        resume.image = uri;
-      } catch (err) {
-        console.log(err);
-      }
-    };
+  const displayResume = async (html: string) => {
+    try {
+      const { uri } = await Print.printToFileAsync({
+        html,
+      });
 
-    // get template
-    axios
-      .get(`${APP_BACKEND_URL}/template/${resume.templateId}`)
+      console.log("File has been saved to:", uri);
+      setResumeImage(uri);
+      setResumeHtml(html);
+      resume.image = uri;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getTemplate = async () => {
+    await axios
+      .get(`${process.env.APP_BACKEND_URL}/template/${resume.templateId}`)
       .then((res) => {
         setTemplate(res.data);
         console.log(res.data);
@@ -111,12 +113,16 @@ export default function ReviewNewResume({ route, navigation }) {
         displayResume(filledInResume);
       })
       .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    getUserInfo();
+    getTemplate();
   }, []);
 
   const addNewResume = () => {
     axios
-      .post(`${APP_BACKEND_URL}/user/1/resume`, {
-        userId: 1,
+      .post(`${process.env.APP_BACKEND_URL}/user/${user.id}/resume`, {
         templateId: resume.templateId,
         name: resume.name,
         description: resume.description,

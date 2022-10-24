@@ -10,16 +10,18 @@ import { useState, useEffect } from "react";
 import moment from "moment";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { APP_BACKEND_URL } from "@env";
+import { useAuth } from "../hooks/useAuth";
 
 export default function EducationProfileScreen() {
   const navigation = useNavigation();
   const [education, setEducation] = useState([]);
   const [refreshing, setRefreshing] = useState(true);
 
+  const { user } = useAuth();
+
   const getEducation = () => {
     axios
-      .get(`${APP_BACKEND_URL}/user/1/education`)
+      .get(`${process.env.APP_BACKEND_URL}/user/${user.id}/education`)
       .then((res) => {
         setEducation(res.data);
         setRefreshing(false);

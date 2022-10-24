@@ -9,20 +9,21 @@ import { View, Text } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { APP_BACKEND_URL } from "@env";
+import { useAuth } from "../hooks/useAuth";
 
 export default function HomeScreen({ navigation }) {
-  const [user, setUser] = useState(null);
   const [resume, setResume] = useState([]);
   const [refreshing, setRefreshing] = useState(true);
 
+  const { user } = useAuth();
+
   const getResumes = () => {
     axios
-      .get(`${APP_BACKEND_URL}/user/1/resume`)
+      .get(`${process.env.APP_BACKEND_URL}/user/${user.id}/resume`)
       .then((res) => {
         setResume(res.data);
         setRefreshing(false);
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch((error) => console.log(error));
   };

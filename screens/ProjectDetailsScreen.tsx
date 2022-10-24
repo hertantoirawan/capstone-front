@@ -1,25 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   Platform,
   StyleSheet,
   FlatList,
   KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  Keyboard,
 } from "react-native";
-import {
-  TextInput,
-  Button,
-  Divider,
-  Card,
-  List,
-  Checkbox,
-} from "react-native-paper";
-import { Ionicons } from "@expo/vector-icons";
-import axios from "axios";
-
-import { Text, View } from "../components/Themed";
+import { TextInput, Button, Divider, List } from "react-native-paper";
 
 interface Repository {
   id: number;

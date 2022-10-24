@@ -10,16 +10,18 @@ import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect } from "react";
 import moment from "moment";
 import axios from "axios";
-import { APP_BACKEND_URL } from "@env";
+import { useAuth } from "../hooks/useAuth";
 
 export default function WorkProfileScreen() {
   const navigation = useNavigation();
   const [workExperience, setWorkExperience] = useState([]);
   const [refreshing, setRefreshing] = useState(true);
 
+  const { user } = useAuth();
+
   const getWorkExperience = () => {
     axios
-      .get(`${APP_BACKEND_URL}/user/1/work`)
+      .get(`${process.env.APP_BACKEND_URL}/user/${user.id}/work`)
       .then((res) => {
         setWorkExperience(res.data);
         setRefreshing(false);

@@ -1,28 +1,39 @@
 import { View, Text } from "../components/Themed";
 
 import { Button } from "react-native-paper";
-// import { useAuth } from "../hooks/useAuth.js";
+import { useAuth } from "../hooks/useAuth";
 import { StyleSheet } from "react-native";
 import axios from "axios";
-import { useState } from "react";
-import { APP_BACKEND_URL } from "@env";
+import { useState, useEffect } from "react";
+import * as WebBrowser from "expo-web-browser";
+import * as Linking from "expo-linking";
 
 export default function LoginScreen({ navigation }) {
-  const [user, setUser] = useState(null);
+  const [accessToken, setAccessToken] = useState("");
 
-  // const { user } = useAuth();
-  const handlePress = () => {
-    console.log("in handlePress");
-    console.log(APP_BACKEND_URL);
+  const { setUser } = useAuth();
 
-    axios
-      .get(`${APP_BACKEND_URL}/user/1`)
-      .then((res) => {
-        console.log(res.data);
-        setUser(res.data);
-        navigation.navigate("Root");
-      })
-      .catch((error) => console.log(error));
+  const handlePress = async () => {
+    const result = await WebBrowser.openAuthSessionAsync(
+      `${process.env.APP_BACKEND_AUTH_URL}/?linkingUri=${Linking.createURL(
+        "/?"
+      )}`
+    );
+
+    let redirectData;
+    if (result.url) {
+      redirectData = Linking.parse(result.url);
+
+      const { userId, name, username, accessToken } = redirectData?.queryParams;
+
+      setUser({
+        id: userId,
+        name: name,
+        username: username,
+        accessToken: accessToken,
+      });
+      navigation.navigate("Root");
+    }
   };
 
   return (

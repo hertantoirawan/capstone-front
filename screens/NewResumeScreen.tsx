@@ -10,14 +10,6 @@ import { StyleSheet, FlatList } from "react-native";
 import { useState, useEffect } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const user = {
-  name: "Hertanto Irawan",
-  profile: "Software engineer with 10+ years of experience in Asia and the US.",
-  website: "linkedin.com/in/hertantolie",
-  email: "hertanto.irawan@outlook.com",
-  phone: "+628979655562",
-};
-
 export default function NewResumeScreen({ navigation }) {
   const [resumeName, setResumeName] = useState("");
   const [resumeDescription, setResumeDescription] = useState("");

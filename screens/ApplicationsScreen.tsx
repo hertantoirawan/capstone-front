@@ -5,11 +5,11 @@ import {
   ActivityIndicator,
   RefreshControl,
 } from "react-native";
-import { DataTable, Card } from "react-native-paper";
+import { Card } from "react-native-paper";
 import { Text, View } from "../components/Themed";
 import moment from "moment";
 import axios from "axios";
-import { APP_BACKEND_URL } from "@env";
+import { useAuth } from "../hooks/useAuth";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -17,9 +17,11 @@ export default function ApplicationsScreen({ navigation }) {
   const [applications, setApplications] = useState([]);
   const [refreshing, setRefreshing] = useState(true);
 
+  const { user } = useAuth();
+
   const getApplications = () => {
     axios
-      .get(`${APP_BACKEND_URL}/user/1/application`)
+      .get(`${process.env.APP_BACKEND_URL}/user/${user.id}/application`)
       .then((res) => {
         setApplications(res.data);
         setRefreshing(false);

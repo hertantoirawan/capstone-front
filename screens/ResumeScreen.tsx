@@ -7,18 +7,14 @@ import * as Print from "expo-print";
 import * as Sharing from "expo-sharing";
 import * as FileSystem from "expo-file-system";
 import { WebView } from "react-native-webview";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Resume({ route, navigation }) {
   const resume = route.params.resume;
   const html = resume.htmlContent;
   const [resumeImage, setResumeImage] = useState("");
 
-  const user = {
-    name: "Hertanto Irawan",
-    email: "hertanto.irawan@outlook.com",
-    phone: "+628979655562",
-    website: "https://github.com/hertantoirawan",
-  };
+  const { user } = useAuth();
 
   const setPDFfileName = (uri: string) => {
     const fileUserName = user.name.replace(" ", "_");

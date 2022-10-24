@@ -12,15 +12,17 @@ import moment from "moment";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Text, View } from "../components/Themed";
 import axios from "axios";
-import { APP_BACKEND_URL } from "@env";
+import { useAuth } from "../hooks/useAuth";
 
 export default function WorkExperienceScreen({ route, navigation }) {
   const [workExperience, setWorkExperience] = useState([]);
   const [refreshing, setRefreshing] = useState(true);
 
+  const { user } = useAuth();
+
   const getWorkExperience = () => {
     axios
-      .get(`${APP_BACKEND_URL}/user/1/work`)
+      .get(`${process.env.APP_BACKEND_URL}/user/${user.id}/work`)
       .then((res) => {
         setWorkExperience(res.data);
         setRefreshing(false);
