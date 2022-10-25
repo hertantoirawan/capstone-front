@@ -1,7 +1,5 @@
-import { View, Text } from "../components/Themed";
 import { useState } from "react";
 import { StyleSheet, useWindowDimensions } from "react-native";
-import { TextInput } from "react-native-paper";
 import { TabView, SceneMap } from "react-native-tab-view";
 import GeneralRoute from "./GeneralProfileScreen";
 import WorkExperienceRoute from "./WorkProfileScreen";

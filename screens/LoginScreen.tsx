@@ -1,16 +1,13 @@
-import { View, Text } from "../components/Themed";
+import { View } from "../components/Themed";
 
 import { Button } from "react-native-paper";
 import { useAuth } from "../hooks/useAuth";
 import { StyleSheet } from "react-native";
-import axios from "axios";
-import { useState, useEffect } from "react";
 import * as WebBrowser from "expo-web-browser";
 import * as Linking from "expo-linking";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function LoginScreen({ navigation }) {
-  const [accessToken, setAccessToken] = useState("");
-
   const { setUser } = useAuth();
 
   const handlePress = async () => {
@@ -38,6 +35,7 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <Ionicons name="logo-github" size={72} color="black" />
       <Button mode="contained" onPress={handlePress}>
         Log In With GitHub
       </Button>

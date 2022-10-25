@@ -5,8 +5,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { Card, Chip, FAB } from "react-native-paper";
-import { View, Text } from "../components/Themed";
-import { RootTabScreenProps } from "../types";
+import { View } from "../components/Themed";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth";

@@ -1,5 +1,5 @@
 import { View, Text } from "../components/Themed";
-import { TextInput, Button, FAB, Card } from "react-native-paper";
+import { FAB, Card } from "react-native-paper";
 import {
   StyleSheet,
   FlatList,
@@ -41,6 +41,7 @@ export default function EducationProfileScreen() {
 
   return (
     <View style={styles.container}>
+      {refreshing ? <ActivityIndicator /> : null}
       <FlatList
         data={education}
         renderItem={({ item }) => (

@@ -1,15 +1,14 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Platform, StyleSheet, Pressable } from "react-native";
 import { TextInput, Button, Snackbar } from "react-native-paper";
-import { Ionicons } from "@expo/vector-icons";
 import { shareAsync } from "expo-sharing";
 import * as Print from "expo-print";
 import moment from "moment";
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
 
-import { Text, View } from "../components/Themed";
+import { View } from "../components/Themed";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default function ApplyModalScreen({ route }) {

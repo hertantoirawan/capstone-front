@@ -1,4 +1,4 @@
-import { View, Text } from "../components/Themed";
+import { View } from "../components/Themed";
 import { TextInput, Button, Snackbar } from "react-native-paper";
 import { StyleSheet } from "react-native";
 import { useState, useEffect } from "react";

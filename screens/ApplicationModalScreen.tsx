@@ -1,11 +1,8 @@
 import { View, Text } from "../components/Themed";
 
 import { useEffect, useState } from "react";
-import { Button, Chip } from "react-native-paper";
-import { StyleSheet, Image, Platform } from "react-native";
+import { StyleSheet } from "react-native";
 import * as Print from "expo-print";
-import * as Sharing from "expo-sharing";
-import * as FileSystem from "expo-file-system";
 import { WebView } from "react-native-webview";
 import { useAuth } from "../hooks/useAuth";
 import axios from "axios";

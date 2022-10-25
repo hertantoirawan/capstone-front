@@ -1,13 +1,7 @@
-import { View, Text } from "../components/Themed";
-import {
-  TextInput,
-  Button,
-  Chip,
-  Searchbar,
-  Divider,
-} from "react-native-paper";
-import { StyleSheet, FlatList } from "react-native";
-import { useState, useEffect } from "react";
+import { View } from "../components/Themed";
+import { TextInput, Button, Chip } from "react-native-paper";
+import { StyleSheet } from "react-native";
+import { useState } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function NewResumeScreen({ navigation }) {

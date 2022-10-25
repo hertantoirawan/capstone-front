@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   Platform,
@@ -8,10 +8,9 @@ import {
   Keyboard,
 } from "react-native";
 import { TextInput, Button, Snackbar } from "react-native-paper";
-import { Ionicons } from "@expo/vector-icons";
 import moment from "moment";
 
-import { Text, View } from "../components/Themed";
+import { View } from "../components/Themed";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default function AddWorkModalScreen({ route, navigation }) {

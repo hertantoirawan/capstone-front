@@ -7,7 +7,7 @@ import {
   RefreshControl,
   ActivityIndicator,
 } from "react-native";
-import { Card, Button, Divider, List, Checkbox } from "react-native-paper";
+import { Card, Button } from "react-native-paper";
 import moment from "moment";
 import axios from "axios";
 import { MaterialIcons } from "@expo/vector-icons";

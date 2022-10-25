@@ -1,18 +1,10 @@
 import { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Platform, StyleSheet, FlatList } from "react-native";
-import {
-  TextInput,
-  Button,
-  Divider,
-  List,
-  Checkbox,
-  Searchbar,
-} from "react-native-paper";
-import { Ionicons } from "@expo/vector-icons";
+import { Button, Divider, List, Checkbox, Searchbar } from "react-native-paper";
 import axios from "axios";
 
-import { Text, View } from "../components/Themed";
+import { View } from "../components/Themed";
 import { useAuth } from "../hooks/useAuth";
 
 export default function ProjectsScreen({ route, navigation }) {

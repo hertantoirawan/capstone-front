@@ -1,5 +1,5 @@
 import { View, Text } from "../components/Themed";
-import { TextInput, Button, FAB, Card } from "react-native-paper";
+import { FAB, Card } from "react-native-paper";
 import {
   StyleSheet,
   FlatList,
