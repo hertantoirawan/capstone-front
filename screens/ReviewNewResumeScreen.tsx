@@ -16,18 +16,24 @@ export default function ReviewNewResume({ route, navigation }) {
   const [resumeHtml, setResumeHtml] = useState("");
   const [user, setUser] = useState(useAuth().user);
 
-  const fillInResumeInfo = (selectedTemplate): string => {
+  const fillInResumeInfo = (userInfo, selectedTemplate): string => {
     let filledInResume = selectedTemplate.htmlContent;
     const articleHtml = selectedTemplate.htmlArticleTemplate;
 
     // fill in user profile
     filledInResume = filledInResume
-      .replace("{{name}}", user.name)
+      .replace("{{name}}", userInfo.name)
       .replace("{{resume}}", resume.name)
-      .replace("{{email}}", `<a href='mailto:${user.email}'>${user.email}</a>`)
-      .replace("{{website}}", `<a href='${user.website}'>${user.website}</a>`)
-      .replace("{{phone}}", user.phone)
-      .replace("{{profile}}", user.profile);
+      .replace(
+        "{{email}}",
+        `<a href='mailto:${userInfo.email}'>${userInfo.email}</a>`
+      )
+      .replace(
+        "{{website}}",
+        `<a href='${userInfo.website}'>${userInfo.website}</a>`
+      )
+      .replace("{{phone}}", userInfo.phone)
+      .replace("{{profile}}", userInfo.profile);
 
     // fill in work experience
     let workExperience: string = "";
@@ -75,14 +81,27 @@ export default function ReviewNewResume({ route, navigation }) {
     return filledInResume;
   };
 
-  const getUserInfo = async () => {
-    await axios
-      .get(`${process.env.APP_BACKEND_URL}/user/${user.id}`)
-      .then((res) => {
-        setUser(res.data);
-        console.log(res.data);
-      })
-      .catch((error) => console.log(error));
+  const buildUserResume = async () => {
+    try {
+      const getUser = await axios.get(
+        `${process.env.APP_BACKEND_URL}/user/${user.id}`
+      );
+      setUser(getUser.data);
+
+      const getTemplate = await axios.get(
+        `${process.env.APP_BACKEND_URL}/template/${resume.templateId}`
+      );
+      setTemplate(getTemplate.data);
+
+      // replace content
+      const filledInResume: string = fillInResumeInfo(
+        getUser.data,
+        getTemplate.data
+      );
+      displayResume(filledInResume);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const displayResume = async (html: string) => {
@@ -100,24 +119,8 @@ export default function ReviewNewResume({ route, navigation }) {
     }
   };
 
-  const getTemplate = async () => {
-    await axios
-      .get(`${process.env.APP_BACKEND_URL}/template/${resume.templateId}`)
-      .then((res) => {
-        setTemplate(res.data);
-        console.log(res.data);
-
-        // replace content
-        const filledInResume: string = fillInResumeInfo(res.data);
-
-        displayResume(filledInResume);
-      })
-      .catch((error) => console.log(error));
-  };
-
   useEffect(() => {
-    getUserInfo();
-    getTemplate();
+    buildUserResume();
   }, []);
 
   const addNewResume = () => {
