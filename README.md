@@ -1,1 +1,1 @@
-# capstone-front
+# Github Resume Frontend
